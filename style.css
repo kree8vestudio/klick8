@@ -1,0 +1,161 @@
+/* Reset and Font */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Body */
+body {
+  background-color: #FAF6F0;
+  color: #1A1A1A;
+  padding: 20px;
+}
+
+/* Header */
+header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+header img {
+  width: 80px;
+}
+
+h1 {
+  font-size: 24px;
+  color: #ffffff;
+  margin-top: 10px;
+}
+
+/* Category Section */
+.category {
+  margin-top: 20px;
+}
+
+.category h2 {
+  font-size: 18px;
+  color: #333;
+  border-bottom: 2px solid #FF6B45;
+  display: inline-block;
+  margin-bottom: 10px;
+}
+
+/* Menu Item */
+.menu-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: white;
+  padding: 12px 16px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  margin-bottom: 12px;
+}
+
+.menu-item .name {
+  font-weight: 500;
+}
+
+.menu-item .price {
+  color: #27AE60;
+  font-weight: 600;
+}
+.category-tabs {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.tab-btn {
+  padding: 8px 14px;
+  border: none;
+  border-radius: 20px;
+  background-color: #eee;
+  color: #333;
+  cursor: pointer;
+  font-weight: 500;
+  transition: 0.3s;
+}
+
+.tab-btn.active,
+.tab-btn:hover {
+  background-color: #FF6B45;
+  color: white;
+}
+.add-btn {
+  background-color: #FF6B45;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: 0.3s;
+}
+
+.add-btn:hover {
+  background-color: #e85f3d;
+}
+.cart-summary {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: #2D2D2D;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+}
+
+.cart-summary button {
+  background-color: #27AE60;
+  border: none;
+  padding: 8px 14px;
+  color: white;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+}
+header {
+  text-align: center;
+  padding: 30px 0;
+  background: linear-gradient(to right, #ff5a2d, #FF6B45); /* dark & rich orange shades */
+  color: white;
+}
+
+header h1 {
+  font-size: 55px;
+  font-weight: 700;
+  margin-bottom: 5px;
+}
+
+header p {
+  font-size: 18px;
+  font-weight: 400;
+  opacity: 0.9;
+}
+.menu-item {
+  display: flex;
+  justify-content: space-between; /* name left, price right */
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.item-name {
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.item-price {
+  font-size: 18px;
+  font-weight: 600;
+  color: #FF6B45; /* brand color */
+}
+
+

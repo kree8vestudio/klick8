@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Checkout - Klick8</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    .qty-btn {
+  background-color: #FF6B45;
+  color: white;
+  border: none;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 16px;
+  line-height: 26px;
+  text-align: center;
+  padding: 0;
+}
+.cart-item div {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* Quantity aur price ke beech ka space */
+}
+.cart-item div span:last-child {
+  margin-left: 15px; /* Price ko thoda right shift */
+  font-weight: bold;
+}
+
+.qty-btn:hover {
+  background-color: #e65b35;
+}
+
+.qty-btn:hover {
+  background-color: #e65b35;
+}
+
+    body { font-family: 'Poppins', sans-serif; background: #FAF6F0; padding: 20px; }
+    h1 { color: #FF6B45; }
+    .cart-item { display: flex; justify-content: space-between; background: #fff; padding: 10px; margin-bottom: 8px; border-radius: 8px; }
+    input, textarea { width: 100%; padding: 8px; margin: 6px 0; border: 1px solid #ccc; border-radius: 6px; }
+    button { background: #27AE60; color: #fff; padding: 10px; border: none; border-radius: 6px; cursor: pointer; width: 100%; font-size: 16px; }
+    button:hover { background: #1f8b4b; }
+    select {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 16px;
+  width: 100%;
+  margin-bottom: 15px;
+}
+select {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 16px;
+  width: 100%;
+  margin-bottom: 15px;
+}
+
+
+  </style>
+</head>
+<body>
+    
+
+<h1>Checkout</h1>
+  
+  <h2>Order Summary</h2>
+  <div id="order-summary"></div>
+  <h3>Total: ₹<span id="total-price">0</span></h3>
+
+  <h2>Table & Details</h2>
+  <label for="table-number">Table Number</label>
+<select id="table-number" required>
+  <option value="">Select Table</option>
+  <option value="1">Table 1</option>
+  <option value="2">Table 2</option>
+  <option value="3">Table 3</option>
+  <option value="4">Table 4</option>
+  <option value="5">Table 5</option>
+</select>
+
+  <input type="text" id="customer-name" placeholder="Your Name (optional)">
+  <textarea id="notes" placeholder="Any special request?"></textarea>
+<button id="confirm-order">Confirm Order</button>
+
+
+  <script>
+    const cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
+let cartTotal = parseInt(localStorage.getItem("cartTotal")) || 0;
+
+const orderSummary = document.getElementById("order-summary");
+const totalPrice = document.getElementById("total-price");
+
+function renderCart() {
+  orderSummary.innerHTML = "";
+  cartTotal = 0;
+
+  cartItems.forEach((item, index) => {
+    const itemTotal = item.price * item.qty;
+    cartTotal += itemTotal;
+
+    const div = document.createElement("div");
+    div.classList.add("cart-item");
+    div.innerHTML = `
+      <span>${item.name}</span>
+      <div>
+        <button class="qty-btn" onclick="updateQty(${index}, -1)">−</button>
+        <span>${item.qty}</span>
+        <button class="qty-btn" onclick="updateQty(${index}, 1)">+</button>
+        <span>₹${itemTotal}</span>
+      </div>
+    `;
+    orderSummary.appendChild(div);
+  });
+
+  totalPrice.textContent = cartTotal;
+}
+
+function updateQty(index, change) {
+  cartItems[index].qty += change;
+  if (cartItems[index].qty <= 0) {
+    cartItems.splice(index, 1);
+  }
+  localStorage.setItem("cartItems", JSON.stringify(cartItems));
+  renderCart();
+}
+
+renderCart();
+
+document.getElementById("confirm-order").addEventListener("click", () => {
+  const name = document.getElementById("customer-name").value || "Guest";
+  const table = document.getElementById("table-number").value;
+  const notes = document.getElementById("notes").value;
+  if (!table) {
+    alert("Please enter your table number");
+    return;
+  }
+  const message = `New Order from ${name}%0ATable: ${table}%0A` +
+                  cartItems.map(i => `${i.name} x${i.qty} = ₹${i.price * i.qty}`).join("%0A") +
+                  `%0ATotal: ₹${cartTotal}%0ANotes: ${notes}`;
+  const phoneNumber = "919529503827"; // Owner's WhatsApp number
+  window.open(`https://wa.me/${phoneNumber}?text=${message}`, "_blank");
+});
+
+
+    document.getElementById("confirm-order").addEventListener("click", () => {
+      const name = document.getElementById("customer-name").value || "Guest";
+      const table = document.getElementById("table-number").value;
+      const notes = document.getElementById("notes").value;
+      if (!table) {
+        alert("Please enter your table number");
+        return;
+      }
+      const message = `New Order from ${name}%0ATable: ${table}%0A` +
+                      cartItems.map(i => `${i.name} x${i.qty} = ₹${i.price * i.qty}`).join("%0A") +
+                      `%0ATotal: ₹${cartTotal}%0ANotes: ${notes}`;
+      const phoneNumber = "919529503827"; // Owner's WhatsApp number with country code
+      window.open(`https://wa.me/${phoneNumber}?text=${message}`, "_blank");
+    });
+  </script>
+  
+  
+
+</body>
+</html>

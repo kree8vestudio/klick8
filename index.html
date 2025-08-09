@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="stylesheet" href="style.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Klick8 - Digital Menu</title>
+</head>
+<body>
+
+  <header>
+    
+    <h1>Café 8Bites</h1>
+    <!-- Category Tabs -->
+<nav class="category-tabs">
+  <button class="tab-btn active" data-category="all">All</button>
+  <button class="tab-btn" data-category="starters">Starters</button>
+  <button class="tab-btn" data-category="main">Main Course</button>
+  <button class="tab-btn" data-category="beverages">Beverages</button>
+</nav>
+
+  </header>
+
+  <section class="category starters">
+  <h2>Starters</h2>
+  <div class="menu-item">
+    <span class="name">Veg Spring Rolls</span>
+    <span class="price">₹120</span>
+    <button class="add-btn">Add</button>
+  </div>
+  <div class="menu-item">
+    <span class="name">Paneer Tikka</span>
+    <span class="price">₹180</span>
+    <button class="add-btn">Add</button>
+  </div>
+</section>
+
+<section class="category main">
+  <h2>Main Course</h2>
+  <div class="menu-item">
+    <span class="name">Butter Paneer</span>
+    <span class="price">₹220</span>
+    <button class="add-btn">Add</button>
+  </div>
+  <div class="menu-item">
+    <span class="name">Dal Makhani</span>
+    <span class="price">₹160</span>
+    <button class="add-btn">Add</button>
+  </div>
+</section>
+
+<section class="category beverages">
+  <h2>Beverages</h2>
+  <div class="menu-item">
+    <span class="name">Lemon Soda</span>
+    <span class="price">₹50</span>
+    <button class="add-btn">Add</button>
+  </div>
+  <div class="menu-item">
+    <span class="name">Cold Coffee</span>
+    <span class="price">₹90</span>
+    <button class="add-btn">Add</button>
+  </div>
+</section>
+
+
+  <section class="category">
+    <h2>Beverages</h2>
+    <div class="menu-item">
+      <span class="name">Lemon Soda</span>
+      <span class="price">₹50</span>
+      <button class="add-btn">Add</button>
+    </div>
+    <div class="menu-item">
+      <span class="name">Cold Coffee</span>
+      <span class="price">₹90</span>
+      <button class="add-btn">Add</button>
+    </div>
+  </section>
+
+<script>
+  const buttons = document.querySelectorAll(".tab-btn");
+  const categories = document.querySelectorAll(".category");
+
+  buttons.forEach(btn => {
+    btn.addEventListener("click", () => {
+      // Remove active class
+      buttons.forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+
+      const category = btn.getAttribute("data-category");
+
+      categories.forEach(section => {
+        if (category === "all" || section.classList.contains(category)) {
+          section.style.display = "block";
+        } else {
+          section.style.display = "none";
+        }
+      });
+    });
+  });
+</script>
+<div class="cart-summary">
+  <span id="cart-items">0 items</span>
+  <span id="cart-total">₹0</span>
+  <button id="place-order">Place Order</button>
+</div>
+<script>
+  let cartItems = [];
+let cartCount = 0;
+let cartTotal = 0;
+
+
+  document.querySelectorAll(".add-btn").forEach(button => {
+  button.addEventListener("click", () => {
+    const itemDiv = button.closest(".menu-item");
+    const name = itemDiv.querySelector(".name").textContent;
+    const price = parseInt(itemDiv.querySelector(".price").textContent.replace("₹", ""));
+    
+    // Check if item already in cart
+    const existing = cartItems.find(i => i.name === name);
+    if (existing) {
+      existing.qty++;
+    } else {
+      cartItems.push({ name, price, qty: 1 });
+    }
+
+    cartCount++;
+    cartTotal += price;
+    updateCart();
+  });
+});
+function updateCart() {
+  document.getElementById("cart-items").textContent = `${cartCount} items`;
+  document.getElementById("cart-total").textContent = `₹${cartTotal}`;
+}
+
+
+
+  document.getElementById("place-order").addEventListener("click", () => {
+  if (cartItems.length > 0) {
+    // Save cart data to localStorage
+    localStorage.setItem("cartItems", JSON.stringify(cartItems));
+    localStorage.setItem("cartTotal", cartTotal);
+    window.location.href = "checkout.html";
+  } else {
+    alert("Your cart is empty!");
+  }
+});
+
+
+function getCartItems() {
+  let items = [];
+  document.querySelectorAll(".menu-item").forEach(item => {
+    const name = item.querySelector(".name").textContent;
+    const price = parseInt(item.querySelector(".price").textContent.replace("₹", ""));
+    const qty = parseInt(item.querySelector(".quantity") ? item.querySelector(".quantity").textContent : "1");
+    if (qty > 0) {
+      items.push({ name, price, qty });
+    }
+  });
+  return items;
+}
+
+</script>
+
+</body>
+</html>
